@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 seq = np.array([1, 0, 1, 0, 1, 1, 0])
 
@@ -17,8 +18,34 @@ def nrz(seq: np.array, bps: int):
 
 
 
-NRZ = nrz(seq, 2)
+NRZ = nrz(seq, 200)
+print(len(NRZ))
 print(f"The NRZ encoding for the sequence {seq} is: \n {NRZ}")
+
+
+def create_carrier(freq, duration, sampling_rate, amplitude = 1, phase = 0):
+    t = np.linspace(0, duration, int(sampling_rate * duration), endpoint = False)
+    wave = amplitude * np.sin(2 * np.pi * freq * t + phase)
+
+    return t, wave
+
+
+
+freq = 20.0   
+dur = 1.0    
+s_rate = 1000.0
+
+time, sine_wave = create_carrier(freq=freq, duration=dur, sampling_rate=s_rate)
+
+
+
+plt.figure(figsize=(10, 4))
+plt.plot(time, sine_wave)
+plt.title(f'{freq} Hz Sine Wave')
+plt.xlabel('Time (seconds)')
+plt.ylabel('Amplitude')
+plt.grid(True)
+plt.savefig("carrier_wave")
 
 
 
